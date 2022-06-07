@@ -28,14 +28,14 @@
   ];
 
   function addMeetup(event) {
-    console.log(event);
+    meetups = [...meetups, event.detail];
   }
 </script>
 
 <Header/>
 
 <main>
-  <AddMeetupForm/>
+  <AddMeetupForm on:updateMeetups={addMeetup}/>
   <MeetupsGrid {meetups}/>
 </main>
 

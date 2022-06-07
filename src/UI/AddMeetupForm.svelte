@@ -1,19 +1,38 @@
 <script>
-  import TextInput from './TextInput.svelte';
+  import { createEventDispatcher } from 'svelte';
   import { controlTypes } from '../core/models/constants';
+  import TextInput from './TextInput.svelte';
   import Button from './Button.svelte';
+
+  const dispatch = createEventDispatcher();
 
   let title = '';
   let description = '';
   let subtitle = '';
   let address = '';
-  let imageURL = '';
-  let email = '';
+  let imageUrl = '';
+  let contactEmail = '';
+
+  function addMeetup() {
+    dispatch('updateMeetups', {
+      title,
+      description,
+      subtitle,
+      address,
+      imageUrl,
+      contactEmail
+    });
+    updateValues();
+  }
+
+  function updateValues() {
+    title = description = subtitle = address = imageUrl = contactEmail = '';
+  }
 
 </script>
 
 
-<form on:submit|preventDefault>
+<form on:submit|preventDefault={addMeetup}>
   <TextInput
       id="title"
       label="Title"
@@ -37,17 +56,17 @@
   />
   <TextInput
       id="imageURL"
-      label="Address"
+      label="Image URL"
       inputType="text"
-      value="{imageURL}"
-      on:input={event => imageURL = event.target.value}
+      value="{imageUrl}"
+      on:input={event => imageUrl = event.target.value}
   />
   <TextInput
       id="email"
       label="Email"
       inputType="email"
-      value="{email}"
-      on:input={event => email = event.target.value}
+      value="{contactEmail}"
+      on:input={event => contactEmail = event.target.value}
   />
   <TextInput
       id="description"
